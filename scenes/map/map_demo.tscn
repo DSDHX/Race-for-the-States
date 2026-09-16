@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://humj5unpvjny"]
+
+[ext_resource type="Theme" path="res://themes/map_theme.tres" id="1"]
+[ext_resource type="Script" path="res://scripts/demo/map_demo.gd" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/map/us_map.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/map/electoral_score.tscn" id="4"]
+
+[sub_resource type="StyleBoxFlat" id="MapPanelStyle"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+bg_color = Color(0.0627451, 0.12941177, 0.17254902, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.16078432, 0.26666668, 0.31764707, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_left = 6
+corner_radius_bottom_right = 6
+
+[node name="MapDemo" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1")
+script = ExtResource("2")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.043137256, 0.09019608, 0.13333334, 1)
+
+[node name="ScreenMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 24
+
+[node name="Layout" type="VBoxContainer" parent="ScreenMargin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Scores" parent="ScreenMargin/Layout" instance=ExtResource("4")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MapPanel" type="PanelContainer" parent="ScreenMargin/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("MapPanelStyle")
+
+[node name="USMap" parent="ScreenMargin/Layout/MapPanel" instance=ExtResource("3")]
+unique_name_in_owner = true
+layout_mode = 2

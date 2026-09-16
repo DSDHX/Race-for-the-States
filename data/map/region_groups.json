@@ -1,0 +1,12 @@
+{
+  "NENG": {
+    "name": "New England",
+    "name_zh": "新英格兰州",
+    "members": ["VT", "NH", "MA", "RI", "CT"]
+  },
+  "MATL": {
+    "name": "Mid-Atlantic",
+    "name_zh": "中大西洋州",
+    "members": ["PA", "MD", "DE", "NJ", "DC"]
+  }
+}
