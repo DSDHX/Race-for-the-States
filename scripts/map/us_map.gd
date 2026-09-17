@@ -112,9 +112,16 @@ func _set_hovered(state_id: String) -> void:
 	if hovered_id == state_id:
 		return
 	hovered_id = state_id
-	tooltip_text = "" if state_id.is_empty() else "%s\n力量：%s" % [map_data.regions[state_id].name, preload("res://scripts/gameplay/match_rules.gd").number(int(map_state.states[state_id].units))]
+	_refresh_tooltip()
 	refresh_states()
 	state_hovered.emit(state_id)
+
+func _refresh_tooltip() -> void:
+	tooltip_text = "" if hovered_id.is_empty() or map_data == null else tr("%s\n力量：%s") % [tr(str(map_data.regions[hovered_id].name)), preload("res://scripts/gameplay/match_rules.gd").number(int(map_state.states[hovered_id].units))]
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED:
+		_refresh_tooltip()
 
 func _draw() -> void:
 	draw_set_transform(map_offset, 0, Vector2.ONE * map_scale)

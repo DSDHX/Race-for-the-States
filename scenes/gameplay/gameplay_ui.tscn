@@ -160,32 +160,28 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(472, 108)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "候选州 1
-+0 力量 / 秒"
+text = "候选州 1\n+0 力量 / 秒"
 
 [node name="SpawnOption1" type="Button" parent="Dialogs/SpawnOverlay/Center/Panel/Content/Choices" unique_id=177463643]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(472, 108)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "候选州 2
-+0 力量 / 秒"
+text = "候选州 2\n+0 力量 / 秒"
 
 [node name="SpawnOption2" type="Button" parent="Dialogs/SpawnOverlay/Center/Panel/Content/Choices" unique_id=1655845948]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(472, 108)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "候选州 3
-+0 力量 / 秒"
+text = "候选州 3\n+0 力量 / 秒"
 
 [node name="SpawnOption3" type="Button" parent="Dialogs/SpawnOverlay/Center/Panel/Content/Choices" unique_id=1041579702]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(472, 108)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "候选州 4
-+0 力量 / 秒"
+text = "候选州 4\n+0 力量 / 秒"
 
 [node name="SpawnStatus" type="Label" parent="Dialogs/SpawnOverlay/Center/Panel/Content" unique_id=698501625]
 unique_name_in_owner = true
@@ -255,8 +251,7 @@ text = "派遣力量"
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "来源 → 目标
-可派力量：750,000"
+text = "来源 → 目标\n可派力量：750,000"
 autowrap_mode = 3
 
 [node name="Presets" type="HBoxContainer" parent="Dialogs/OrderOverlay/Center/Panel/Content" unique_id=1954994793]
@@ -316,8 +311,7 @@ text = "派遣"
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "己方州接收增援；中立／敌方州按力量 1:1 抵消。
-对局计时持续进行，派遣数量以点击时的力量为准。"
+text = "己方州接收增援；中立／敌方州按力量 1:1 抵消。\n对局计时持续进行，派遣数量以点击时的力量为准。"
 autowrap_mode = 3
 
 [node name="CancelOrder" type="Button" parent="Dialogs/OrderOverlay/Center/Panel/Content" unique_id=1702451983]

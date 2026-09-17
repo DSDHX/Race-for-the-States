@@ -20,6 +20,10 @@ var remaining_seconds := Rules.DURATION_SECONDS
 func _ready() -> void:
 	_refresh()
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED:
+		_refresh()
+
 func set_totals(totals: Array[int]) -> void:
 	total_votes = totals[0] + totals[1] + totals[2]
 	player_one_votes = totals[1]
@@ -38,5 +42,5 @@ func _refresh() -> void:
 	$Track/PlayerTwoFill.anchor_left = 1.0 - right_ratio
 	$PlayerOneTotal.text = str(player_one_votes)
 	$PlayerTwoTotal.text = str(player_two_votes)
-	$VictoryLabel.text = Rules.clock_text(remaining_seconds) + " TO WIN"
+	$VictoryLabel.text = tr("%s · 获胜目标") % Rules.clock_text(remaining_seconds)
 	$VictoryNumber.text = str(int(total_votes / 2) + 1)

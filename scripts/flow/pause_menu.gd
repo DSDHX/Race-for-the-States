@@ -38,4 +38,4 @@ func set_menu_open(is_open: bool) -> void:
 func _return_to_menu() -> void:
 	var result: Error = get_node("/root/GameSession").return_to_main_menu()
 	if result != OK:
-		$Overlay/Center/Panel/Content/Hint.text = "无法返回主菜单：" + error_string(result)
+		$Overlay/Center/Panel/Content/Hint.text = tr("无法返回主菜单：") + error_string(result)

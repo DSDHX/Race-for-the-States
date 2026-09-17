@@ -19,7 +19,11 @@ const GUEST_ID := 2
 var transport: Node
 var simulation: RefCounted
 var connecting := false
-var status_message := ""
+var _status_key := ""
+var _status_args: Array = []
+var status_message: String:
+	get:
+		return tr(_status_key) if _status_args.is_empty() else tr(_status_key) % _status_args
 var room_port := DEFAULT_PORT
 var _guest_connection := 0
 var _host_connection := 0
@@ -77,7 +81,7 @@ func create_room(port: int = DEFAULT_PORT) -> Error:
 		return ERR_INVALID_PARAMETER
 	var error: Error = transport.listen(port)
 	if error != OK:
-		_set_status("无法创建房间，端口 %d 可能被占用：%s" % [port, error_string(error)])
+		_set_status("无法创建房间，端口 %d 可能被占用：%s", [port, error_string(error)])
 		return error
 	room_port = port
 	phase = Phase.LOBBY
@@ -102,12 +106,12 @@ func request_join(address: String) -> Error:
 	clear_session()
 	var error: Error = transport.connect_host(parts[0], port)
 	if error != OK:
-		_set_status("无法连接主机：" + error_string(error))
+		_set_status("无法连接主机：%s", [error_string(error)])
 		return error
 	connecting = true
 	_connect_started = Time.get_ticks_msec()
 	room_port = port
-	_set_status("正在连接 %s:%d…" % [parts[0], port])
+	_set_status("正在连接 %s:%d…", [parts[0], port])
 	join_requested.emit(address.strip_edges())
 	return OK
 
@@ -180,7 +184,7 @@ func start_match() -> Error:
 			return ERR_CONNECTION_ERROR
 	var result := get_tree().change_scene_to_file(MATCH_SCENE)
 	if result != OK:
-		_end_connection("无法载入对局：" + error_string(result))
+		_end_connection("无法载入对局：%s", [error_string(result)])
 		return result
 	match_started.emit(get_match_config())
 	return OK
@@ -207,7 +211,8 @@ func clear_session() -> void:
 	_revision = 0
 	_last_revision = -1
 	_snapshot_pending = false
-	status_message = ""
+	_status_key = ""
+	_status_args.clear()
 	phase = Phase.MENU
 	local_player_id = 0
 	host_player_id = 0
@@ -222,16 +227,17 @@ func faction_name(faction_id: int) -> String:
 func _valid_faction(faction_id: int) -> bool:
 	return faction_id in [FACTION_CYAN, FACTION_ORANGE]
 
-func _set_status(message: String) -> void:
-	status_message = message
-	status_changed.emit(message)
+func _set_status(message: String, args: Array = []) -> void:
+	_status_key = message
+	_status_args = args.duplicate()
+	status_changed.emit(status_message)
 
 func room_addresses() -> String:
 	var addresses: Array[String] = []
 	for address: String in IP.get_local_addresses():
 		if address.is_valid_ip_address() and not address.contains(":") and not address.begins_with("127.") and not address.begins_with("169.254."):
 			addresses.append("%s:%d" % [address, room_port])
-	return " / ".join(addresses) if not addresses.is_empty() else "127.0.0.1:%d（仅本机）" % room_port
+	return " / ".join(addresses) if not addresses.is_empty() else tr("127.0.0.1:%d（仅本机）") % room_port
 
 func _connected(id: int) -> void:
 	if is_local_host():
@@ -321,7 +327,7 @@ func _receive_host(message: Dictionary) -> void:
 		phase = Phase.MATCH
 		var error := get_tree().change_scene_to_file(MATCH_SCENE)
 		if error != OK:
-			_end_connection("无法载入对局：" + error_string(error))
+			_end_connection("无法载入对局：%s", [error_string(error)])
 		else:
 			match_started.emit(get_match_config())
 	elif kind == "snapshot" and phase == Phase.MATCH:
@@ -417,9 +423,9 @@ func _disconnected(id: int, reason: String) -> void:
 	elif not is_local_host() and (id == _host_connection or connecting):
 		_end_connection(reason)
 
-func _end_connection(reason: String) -> void:
+func _end_connection(reason: String, args: Array = []) -> void:
 	var was_match := phase == Phase.MATCH
 	clear_session()
-	_set_status(reason)
+	_set_status(reason, args)
 	if was_match:
 		get_tree().change_scene_to_file(MENU_SCENE)

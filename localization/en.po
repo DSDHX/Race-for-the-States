@@ -1,0 +1,595 @@
+# Race for the States — editable UI and network message catalog.
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+
+#, c-format
+msgid " · %d 票"
+msgstr " · %d votes"
+
+#, c-format
+msgid "%d / 2 位玩家"
+msgstr "%d / 2 players"
+
+#, c-format
+msgid "%s\n力量：%s"
+msgstr "%s\nForce: %s"
+
+#, c-format
+msgid "%s · 获胜目标"
+msgstr "%s TO WIN"
+
+#, c-format
+msgid "%s → %s\n可派力量：%s   ·   目标力量：%s"
+msgstr "%s → %s\nAvailable force: %s   ·   Target force: %s"
+
+#, c-format
+msgid "%s%s  ·  %d 票\n+%s 力量 / 秒"
+msgstr "%s%s  ·  %d votes\n+%s force / sec"
+
+#, c-format
+msgid "+ %s / 秒"
+msgstr "+ %s / sec"
+
+msgid "+ 0 / 秒"
+msgstr "+ 0 / sec"
+
+msgid "1 / 2 位玩家"
+msgstr "1 / 2 players"
+
+#, c-format
+msgid "127.0.0.1:%d（仅本机）"
+msgstr "127.0.0.1:%d (this computer only)"
+
+msgid "8 分钟结束"
+msgstr "8 minutes elapsed"
+
+#, c-format
+msgid "8 分钟结束 · 青色 %d 票 / 橙色 %d 票\n%s"
+msgstr "Time's up · Cyan %d votes / Orange %d votes\n%s"
+
+msgid "8:00 · 获胜目标"
+msgstr "8:00 TO WIN"
+
+msgid "ALASKA"
+msgstr "ALASKA"
+
+msgid "Alabama"
+msgstr "Alabama"
+
+msgid "Alaska"
+msgstr "Alaska"
+
+msgid "Arizona"
+msgstr "Arizona"
+
+msgid "Arkansas"
+msgstr "Arkansas"
+
+msgid "California"
+msgstr "California"
+
+msgid "Colorado"
+msgstr "Colorado"
+
+msgid "Florida"
+msgstr "Florida"
+
+msgid "Georgia"
+msgstr "Georgia"
+
+msgid "HAWAII"
+msgstr "HAWAII"
+
+msgid "Hawaii"
+msgstr "Hawaii"
+
+msgid "Idaho"
+msgstr "Idaho"
+
+msgid "Illinois"
+msgstr "Illinois"
+
+msgid "Indiana"
+msgstr "Indiana"
+
+msgid "Iowa"
+msgstr "Iowa"
+
+msgid "Kansas"
+msgstr "Kansas"
+
+msgid "Kentucky"
+msgstr "Kentucky"
+
+msgid "Louisiana"
+msgstr "Louisiana"
+
+msgid "Maine"
+msgstr "Maine"
+
+msgid "Michigan"
+msgstr "Michigan"
+
+msgid "Mid-Atlantic"
+msgstr "Mid-Atlantic"
+
+msgid "Minnesota"
+msgstr "Minnesota"
+
+msgid "Mississippi"
+msgstr "Mississippi"
+
+msgid "Missouri"
+msgstr "Missouri"
+
+msgid "Montana"
+msgstr "Montana"
+
+msgid "Nebraska"
+msgstr "Nebraska"
+
+msgid "Nevada"
+msgstr "Nevada"
+
+msgid "New England"
+msgstr "New England"
+
+msgid "New Mexico"
+msgstr "New Mexico"
+
+msgid "New York"
+msgstr "New York"
+
+msgid "North Carolina"
+msgstr "North Carolina"
+
+msgid "North Dakota"
+msgstr "North Dakota"
+
+msgid "Ohio"
+msgstr "Ohio"
+
+msgid "Oklahoma"
+msgstr "Oklahoma"
+
+msgid "Oregon"
+msgstr "Oregon"
+
+msgid "South Carolina"
+msgstr "South Carolina"
+
+msgid "South Dakota"
+msgstr "South Dakota"
+
+msgid "Tennessee"
+msgstr "Tennessee"
+
+msgid "Texas"
+msgstr "Texas"
+
+msgid "Utah"
+msgstr "Utah"
+
+msgid "Virginia"
+msgstr "Virginia"
+
+msgid "Washington"
+msgstr "Washington"
+
+msgid "West Virginia"
+msgstr "West Virginia"
+
+msgid "Wisconsin"
+msgstr "Wisconsin"
+
+msgid "Wyoming"
+msgstr "Wyoming"
+
+msgid "主机地址："
+msgstr "Host address: "
+
+msgid "主机地址：等待创建房间"
+msgstr "Host address: create a room first"
+
+msgid "主机拒绝连接。"
+msgstr "The host rejected the connection."
+
+msgid "主机端口"
+msgstr "Host port"
+
+msgid "争取"
+msgstr "Campaign"
+
+msgid "从 4 个随机候选中选择。所有玩家确认后，8 分钟倒计时才开始。"
+msgstr "Choose one of 4 random states. The 8-minute timer starts once everyone confirms."
+
+msgid "你"
+msgstr "You"
+
+msgid "你的力量 · "
+msgstr "Your force · "
+
+msgid "你的力量 · 青色势力"
+msgstr "Your force · Cyan faction"
+
+msgid "你（加入者） · 选择势力"
+msgstr "You (guest) · Choose a faction"
+
+msgid "你（房主） · 选择势力"
+msgstr "You (host) · Choose a faction"
+
+msgid "例如：192.168.1.10:27845"
+msgstr "Example: 192.168.1.10:27845"
+
+msgid "候选州 1\n+0 力量 / 秒"
+msgstr "State option 1\n+0 force / sec"
+
+msgid "候选州 2\n+0 力量 / 秒"
+msgstr "State option 2\n+0 force / sec"
+
+msgid "候选州 3\n+0 力量 / 秒"
+msgstr "State option 3\n+0 force / sec"
+
+msgid "候选州 4\n+0 力量 / 秒"
+msgstr "State option 4\n+0 force / sec"
+
+msgid "再开一局"
+msgstr "Play again"
+
+msgid "再次按 ESC 返回对局"
+msgstr "Press ESC again to return to the match"
+
+msgid "创建房间等待对手，或加入已有房间。"
+msgstr "Host a room or join an existing one."
+
+msgid "加入游戏"
+msgstr "Join game"
+
+msgid "势力已更新。"
+msgstr "Faction updated."
+
+msgid "单人启动游戏"
+msgstr "Start solo game"
+
+msgid "单人模式可立即重新选择出生州。"
+msgstr "In solo mode, choose a new starting state right away."
+
+msgid "双方候选州互不重合。选择后点击确认。"
+msgstr "Each player has different options. Choose a state, then confirm."
+
+msgid "双方力量已抵消，目标州仍由原势力掌控。"
+msgstr "Forces canceled out. The defending faction keeps the state."
+
+msgid "双方势力不同，可以开始对局。"
+msgstr "Different factions selected. Ready to start."
+
+msgid "双方同意后重新开局。"
+msgstr "A new match starts when both players agree."
+
+#, c-format
+msgid "双方同意后重新开局（%d / %d）。"
+msgstr "A new match starts when both players agree (%d / %d)."
+
+msgid "双方均未达到 270 票。"
+msgstr "Neither faction reached 270 votes."
+
+msgid "双方选择了相同势力，请切换势力后再开始。"
+msgstr "Both players chose the same faction. Choose different factions to start."
+
+msgid "发送队列已满，连接已关闭。"
+msgstr "The send queue is full. Connection closed."
+
+msgid "取消 · ESC"
+msgstr "Cancel · ESC"
+
+msgid "只能从自己掌控的州派遣力量。"
+msgstr "You can only send force from a state you control."
+
+msgid "只能向相邻州派遣力量。"
+msgstr "You can only send force to an adjacent state."
+
+msgid "可以等待对手，也可以直接单人进入地图。"
+msgstr "Wait for an opponent or start a solo game."
+
+msgid "在最终结算时达到 270 票。"
+msgstr " reached 270 votes at the final count."
+
+msgid "增援"
+msgstr "Reinforce"
+
+msgid "增援已到达。"
+msgstr "Reinforcements arrived."
+
+msgid "守到最后：倒计时归零时，270 票获胜。"
+msgstr "Hold on: win with 270 votes when time runs out."
+
+msgid "对局尚未开始或已经结束。"
+msgstr "The match has not started or has already ended."
+
+msgid "对局已开始。"
+msgstr "The match has already started."
+
+msgid "对局状态已改变，请重试。"
+msgstr "The match state has changed. Please try again."
+
+msgid "对手"
+msgstr "Opponent"
+
+msgid "对手已加入，请选择不同势力后开始。"
+msgstr "An opponent joined. Choose different factions to start."
+
+msgid "对手已断开，本局已结束，未计胜负。"
+msgstr "Your opponent disconnected. The match ended without a result."
+
+msgid "对手已离开，可等待其他玩家加入。"
+msgstr "Your opponent left. You can wait for another player."
+
+msgid "对手已离开，对局已结束。"
+msgstr "Your opponent left. The match has ended."
+
+msgid "左键选州  /  右键派遣  /  ESC 菜单"
+msgstr "Left-click: select  /  Right-click: send  /  ESC: menu"
+
+msgid "左键选择己方州，再右键相邻州派遣力量。"
+msgstr "Left-click your state, then right-click an adjacent state to send force."
+
+msgid "己方州接收增援；中立／敌方州按力量 1:1 抵消。\n对局计时持续进行，派遣数量以点击时的力量为准。"
+msgstr "Reinforce friendly states; force cancels out 1:1 in neutral or enemy states.\nThe clock keeps running. Force is calculated when you send it."
+
+msgid "已加入房间，等待房主开始。"
+msgstr "Joined the room. Waiting for the host to start."
+
+msgid "已同意 · 等待对手"
+msgstr "Agreed · Waiting for opponent"
+
+msgid "已确认 · 等待对手"
+msgstr "Confirmed · Waiting for opponent"
+
+#, c-format
+msgid "已连接主机 · TCP %d"
+msgstr "Connected to host · TCP %d"
+
+#, c-format
+msgid "已选择 %s，等待所有玩家确认（%d / %d）。"
+msgstr "Selected %s. Waiting for all players to confirm (%d / %d)."
+
+msgid "平局"
+msgstr "Draw"
+
+msgid "开始对局"
+msgstr "Start match"
+
+msgid "开始游戏"
+msgstr "Play"
+
+msgid "当前无法选择势力。"
+msgstr "You cannot choose a faction right now."
+
+msgid "成为主机"
+msgstr "Host game"
+
+msgid "成功取得该州！"
+msgstr "You won control of the state!"
+
+msgid "房主"
+msgstr "Host"
+
+msgid "房间已创建，等待对手加入。"
+msgstr "Room created. Waiting for an opponent."
+
+msgid "房间已满。"
+msgstr "The room is full."
+
+msgid "房间已满或对局已开始。"
+msgstr "The room is full or the match has already started."
+
+msgid "房间等待"
+msgstr "Lobby"
+
+msgid "所选州力量"
+msgstr "Selected state's force"
+
+msgid "握手超时，请重新连接。"
+msgstr "Handshake timed out. Please reconnect."
+
+msgid "操作已发送，等待主机确认。"
+msgstr "Action sent. Waiting for the host to confirm."
+
+msgid "操作已确认。"
+msgstr "Action confirmed."
+
+msgid "操作无效或已确认，请等待对手。"
+msgstr "Action invalid or already confirmed. Please wait for your opponent."
+
+msgid "操作过于频繁，连接已关闭。"
+msgstr "Too many actions. Connection closed."
+
+msgid "收到无效对局状态，连接已关闭。"
+msgstr "Invalid match state received. Connection closed."
+
+msgid "收到无效房间数据。"
+msgstr "Invalid room data received."
+
+msgid "收到无效网络数据。"
+msgstr "Invalid network data received."
+
+msgid "无效操作数据。"
+msgstr "Invalid action data."
+
+msgid "无效玩家。"
+msgstr "Invalid player."
+
+#, c-format
+msgid "无法创建房间，端口 %d 可能被占用：%s"
+msgstr "Could not create room. Port %d may be in use: %s"
+
+msgid "无法同步对局，请确认双方版本一致。"
+msgstr "Could not sync the match. Make sure both players use the same version."
+
+msgid "无法载入对局："
+msgstr "Could not load match: "
+
+#, c-format
+msgid "无法载入对局：%s"
+msgstr "Could not load match: %s"
+
+msgid "无法返回主菜单："
+msgstr "Could not return to the main menu: "
+
+#, c-format
+msgid "无法连接主机：%s"
+msgstr "Could not connect to host: %s"
+
+msgid "暂停菜单"
+msgstr "Pause menu"
+
+msgid "来源 → 目标\n可派力量：750,000"
+msgstr "Source → Target\nAvailable force: 750,000"
+
+msgid "橙色势力"
+msgstr "Orange faction"
+
+msgid "橙色势力 · 三角形"
+msgstr "Orange faction · Triangle"
+
+#, c-format
+msgid "正在连接 %s:%d…"
+msgstr "Connecting to %s:%d…"
+
+msgid "正在连接…"
+msgstr "Connecting…"
+
+msgid "派遣"
+msgstr "Send"
+
+msgid "派遣 "
+msgstr "Send "
+
+msgid "派遣力量"
+msgstr "Send force"
+
+msgid "派遣比例必须在 1% 到 100% 之间。"
+msgstr "Send between 1% and 100% of your force."
+
+msgid "游戏版本或地图规则不同，请使用同一版本。"
+msgstr "Game versions or map rules differ. Please use the same version."
+
+msgid "目标州力量已达上限，请降低派遣比例。"
+msgstr "The target state's force limit would be exceeded. Send a smaller share."
+
+msgid "确认出生州"
+msgstr "Confirm starting state"
+
+msgid "离开房间"
+msgstr "Leave room"
+
+msgid "竞选结果"
+msgstr "Election results"
+
+msgid "竞选胜利"
+msgstr "Election won"
+
+msgid "竞选落败"
+msgstr "Election lost"
+
+msgid "等待另一位玩家加入…"
+msgstr "Waiting for another player…"
+
+msgid "等待房主开始"
+msgstr "Waiting for host"
+
+msgid "等待房主开始游戏。"
+msgstr "Waiting for the host to start the game."
+
+msgid "简体中文"
+msgstr "简体中文"
+
+msgid "网络发送失败。"
+msgstr "Failed to send network data."
+
+msgid "网络接收失败。"
+msgstr "Failed to receive network data."
+
+msgid "自定比例"
+msgstr "Custom share"
+
+msgid "该比例不足以派出力量。"
+msgstr "This share is too small to send any force."
+
+msgid "语言 / Language"
+msgstr "Language / 语言"
+
+msgid "请先创建房间。"
+msgstr "Create a room first."
+
+msgid "请先左键选择自己的州，再右键选择相邻州。"
+msgstr "Left-click your own state first, then right-click an adjacent state."
+
+msgid "请先选择势力。"
+msgstr "Choose a faction first."
+
+msgid "请等待主机确认操作。"
+msgstr "Please wait for the host to confirm the action."
+
+msgid "请输入主机地址。"
+msgstr "Enter the host's address."
+
+msgid "请输入有效 IPv4 地址，可附加 :端口。"
+msgstr "Enter a valid IPv4 address, optionally followed by :port."
+
+msgid "请连接同一局域网，输入房主界面显示的 IPv4 地址。"
+msgstr "Connect to the same LAN and enter the IPv4 address shown by the host."
+
+msgid "起始力量 750,000"
+msgstr "Starting force: 750,000"
+
+msgid "输入主机地址"
+msgstr "Enter host address"
+
+msgid "返回"
+msgstr "Back"
+
+msgid "返回主菜单"
+msgstr "Main menu"
+
+msgid "连接不可用。"
+msgstr "Connection unavailable."
+
+msgid "连接已关闭。"
+msgstr "Connection closed."
+
+msgid "连接已断开，请检查主机是否仍在房间内。"
+msgstr "Disconnected. Check whether the host is still in the room."
+
+msgid "连接房间"
+msgstr "Connect"
+
+msgid "连接超时，请检查主机地址和网络。"
+msgstr "Connection timed out. Check the host address and network."
+
+msgid "连接超时，请检查地址、端口及防火墙。"
+msgstr "Connection timed out. Check the address, port and firewall."
+
+msgid "退出到主菜单"
+msgstr "Exit to main menu"
+
+msgid "退出游戏"
+msgstr "Quit game"
+
+msgid "选定你的势力，开启竞选之路。"
+msgstr "Choose your faction. Begin your campaign."
+
+msgid "选择你的出生州"
+msgstr "Choose your starting state"
+
+msgid "选择游戏方式"
+msgstr "Choose game mode"
+
+msgid "青色势力"
+msgstr "Cyan faction"
+
+msgid "青色势力 · 圆形"
+msgstr "Cyan faction · Circle"

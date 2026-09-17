@@ -123,7 +123,7 @@ offset_bottom = 110.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.67, 0.77, 0.8, 1)
 theme_override_font_sizes/font_size = 16
-text = "8:00 TO WIN"
+text = "8:00 · 获胜目标"
 horizontal_alignment = 1
 
 [node name="VictoryNumber" type="Label" parent="." unique_id=482515958]
