@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Race for the States"
-run/main_scene="res://scenes/map/map_demo.tscn"
+run/main_scene="res://scenes/menu/main_menu.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameSession="*res://scripts/flow/game_session.gd"
 
 [display]
 

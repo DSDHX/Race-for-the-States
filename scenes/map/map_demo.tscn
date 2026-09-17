@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://scripts/demo/map_demo.gd" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/map/us_map.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/map/electoral_score.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/menu/pause_menu.tscn" id="5"]
 
 [sub_resource type="StyleBoxFlat" id="MapPanelStyle"]
 content_margin_left = 16.0
@@ -69,3 +70,5 @@ theme_override_styles/panel = SubResource("MapPanelStyle")
 [node name="USMap" parent="ScreenMargin/Layout/MapPanel" instance=ExtResource("3")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="PauseMenu" parent="." instance=ExtResource("5")]
