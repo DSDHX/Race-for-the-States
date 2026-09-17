@@ -6,6 +6,7 @@ signal changed
 const NEUTRAL := 0
 const PLAYER_ONE := 1
 const PLAYER_TWO := 2
+const MAX_UNITS := 999_999_999
 var states: Dictionary = {}
 
 func reset(state_ids: Array) -> void:
@@ -17,7 +18,7 @@ func reset(state_ids: Array) -> void:
 func set_state(state_id: String, owner_id: int, units: int) -> void:
 	if not states.has(state_id) or owner_id < 0 or owner_id > 2:
 		return
-	states[state_id] = {"owner": owner_id, "units": clampi(units, 0, 9999)}
+	states[state_id] = {"owner": owner_id, "units": clampi(units, 0, MAX_UNITS)}
 	changed.emit()
 
 func apply_snapshot(snapshot: Dictionary) -> bool:
@@ -32,7 +33,7 @@ func apply_snapshot(snapshot: Dictionary) -> bool:
 			return false
 		if not _is_whole_number(item.owner) or not _is_whole_number(item.units):
 			return false
-		if int(item.owner) < 0 or int(item.owner) > 2 or int(item.units) < 0 or int(item.units) > 9999:
+		if int(item.owner) < 0 or int(item.owner) > 2 or int(item.units) < 0 or int(item.units) > MAX_UNITS:
 			return false
 	for state_id: String in states:
 		states[state_id] = {"owner": int(snapshot[state_id].owner), "units": int(snapshot[state_id].units)}

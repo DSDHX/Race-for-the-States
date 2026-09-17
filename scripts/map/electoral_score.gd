@@ -1,5 +1,7 @@
 @tool
 extends Control
+const Rules = preload("res://scripts/gameplay/match_rules.gd")
+var remaining_seconds := Rules.DURATION_SECONDS
 ## Three native color rectangles. Ownership changes only adjust their anchors.
 
 @export_range(1, 1000) var total_votes: int = 538:
@@ -23,6 +25,10 @@ func set_totals(totals: Array[int]) -> void:
 	player_one_votes = totals[1]
 	player_two_votes = totals[2]
 
+func set_remaining(seconds: int) -> void:
+	remaining_seconds = maxi(0, seconds)
+	_refresh()
+
 func _refresh() -> void:
 	if not is_inside_tree() or not has_node("Track/PlayerOneFill"):
 		return
@@ -32,4 +38,5 @@ func _refresh() -> void:
 	$Track/PlayerTwoFill.anchor_left = 1.0 - right_ratio
 	$PlayerOneTotal.text = str(player_one_votes)
 	$PlayerTwoTotal.text = str(player_two_votes)
-	$VictoryLabel.text = "%d TO WIN" % (total_votes / 2 + 1)
+	$VictoryLabel.text = Rules.clock_text(remaining_seconds) + " TO WIN"
+	$VictoryNumber.text = str(int(total_votes / 2) + 1)

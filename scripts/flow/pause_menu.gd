@@ -13,6 +13,8 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and not event.is_echo():
 		get_viewport().set_input_as_handled()
+		if not overlay.visible and get_parent().has_method("dismiss_order_menu") and get_parent().dismiss_order_menu():
+			return
 		set_menu_open(not overlay.visible)
 
 func set_menu_open(is_open: bool) -> void:

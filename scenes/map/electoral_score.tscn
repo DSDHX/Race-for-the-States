@@ -1,8 +1,8 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cklhcw81r626p"]
 
-[ext_resource type="Script" path="res://scripts/map/electoral_score.gd" id="1"]
+[ext_resource type="Script" uid="uid://rav0hx8uhxdg" path="res://scripts/map/electoral_score.gd" id="1"]
 
-[node name="Scores" type="Control"]
+[node name="Scores" type="Control" unique_id=1245395373]
 custom_minimum_size = Vector2(0, 112)
 layout_mode = 3
 anchors_preset = 10
@@ -11,28 +11,28 @@ grow_horizontal = 2
 mouse_filter = 2
 script = ExtResource("1")
 
-[node name="PlayerOneMarker" type="Label" parent="."]
+[node name="PlayerOneMarker" type="Label" parent="." unique_id=22499695]
+layout_mode = 0
 offset_top = 1.0
 offset_right = 25.0
 offset_bottom = 41.0
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.408, 0.875, 0.808, 1)
 theme_override_font_sizes/font_size = 22
 text = "●"
 vertical_alignment = 1
 
-[node name="PlayerOneTotal" type="Label" parent="."]
+[node name="PlayerOneTotal" type="Label" parent="." unique_id=272648503]
+layout_mode = 0
 offset_left = 34.0
 offset_top = -2.0
 offset_right = 165.0
 offset_bottom = 44.0
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.408, 0.875, 0.808, 1)
 theme_override_font_sizes/font_size = 36
 text = "0"
 
-[node name="PlayerTwoTotal" type="Label" parent="."]
-anchors_preset = 1
+[node name="PlayerTwoTotal" type="Label" parent="." unique_id=457654929]
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -165.0
@@ -40,29 +40,28 @@ offset_top = -2.0
 offset_right = -34.0
 offset_bottom = 44.0
 grow_horizontal = 0
-mouse_filter = 2
 theme_override_colors/font_color = Color(1, 0.718, 0.482, 1)
 theme_override_font_sizes/font_size = 36
 text = "0"
 horizontal_alignment = 2
 
-[node name="PlayerTwoMarker" type="Label" parent="."]
-anchors_preset = 1
+[node name="PlayerTwoMarker" type="Label" parent="." unique_id=536880004]
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -25.0
 offset_top = 1.0
 offset_bottom = 41.0
 grow_horizontal = 0
-mouse_filter = 2
 theme_override_colors/font_color = Color(1, 0.718, 0.482, 1)
 theme_override_font_sizes/font_size = 22
 text = "▲"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Track" type="ColorRect" parent="."]
+[node name="Track" type="ColorRect" parent="." unique_id=1269418407]
 layout_mode = 1
+anchors_preset = 10
 anchor_right = 1.0
 offset_top = 48.0
 offset_bottom = 78.0
@@ -70,15 +69,17 @@ grow_horizontal = 2
 mouse_filter = 2
 color = Color(0.129, 0.216, 0.263, 1)
 
-[node name="PlayerOneFill" type="ColorRect" parent="Track"]
+[node name="PlayerOneFill" type="ColorRect" parent="Track" unique_id=2106531759]
 layout_mode = 1
+anchors_preset = 9
 anchor_bottom = 1.0
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.125, 0.494, 0.514, 1)
 
-[node name="PlayerTwoFill" type="ColorRect" parent="Track"]
+[node name="PlayerTwoFill" type="ColorRect" parent="Track" unique_id=1087132788]
 layout_mode = 1
+anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -87,15 +88,17 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.663, 0.396, 0.196, 1)
 
-[node name="TopHighlight" type="ColorRect" parent="Track"]
+[node name="TopHighlight" type="ColorRect" parent="Track" unique_id=1183974326]
 layout_mode = 1
+anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 1.0
 mouse_filter = 2
 color = Color(0.62, 0.85, 0.85, 0.3)
 
-[node name="CenterLine" type="ColorRect" parent="Track"]
+[node name="CenterLine" type="ColorRect" parent="Track" unique_id=266202682]
 layout_mode = 1
+anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
@@ -108,8 +111,9 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.835, 0.941, 0.925, 1)
 
-[node name="VictoryLabel" type="Label" parent="."]
+[node name="VictoryLabel" type="Label" parent="." unique_id=911063147]
 layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -90.0
@@ -117,8 +121,23 @@ offset_top = 87.0
 offset_right = 90.0
 offset_bottom = 110.0
 grow_horizontal = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.67, 0.77, 0.8, 1)
 theme_override_font_sizes/font_size = 16
-text = "270 TO WIN"
+text = "8:00 TO WIN"
 horizontal_alignment = 1
+
+[node name="VictoryNumber" type="Label" parent="." unique_id=482515958]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -21.0
+offset_top = 7.0
+offset_right = 20.0
+offset_bottom = 41.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.67, 0.77, 0.8, 1)
+theme_override_font_sizes/font_size = 24
+text = "270"
+horizontal_alignment = 1
+vertical_alignment = 1

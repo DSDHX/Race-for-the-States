@@ -4,6 +4,10 @@ extends Control
 
 signal state_selected(state_id: String)
 signal state_hovered(state_id: String)
+signal state_right_clicked(state_id: String)
+var input_enabled := true
+## Zero keeps unrestricted map-preview selection; a match sets its local faction.
+var selectable_faction := 0
 
 @export var canvas_size := Vector2(1440, 740):
 	set(value):
@@ -63,6 +67,10 @@ func select_state(state_id: String) -> void:
 	refresh_states()
 	state_selected.emit(state_id)
 
+func clear_selection() -> void:
+	selected_id = ""
+	refresh_states()
+
 func refresh_states() -> void:
 	var neighbors: Array[String] = []
 	if show_neighbors and map_data != null:
@@ -85,21 +93,26 @@ func state_at_map_point(point: Vector2) -> String:
 	return ""
 
 func _gui_input(event: InputEvent) -> void:
-	if Engine.is_editor_hint() or map_data == null:
+	if Engine.is_editor_hint() or map_data == null or not input_enabled:
 		return
 	if event is InputEventMouseMotion:
 		_set_hovered(state_at_map_point((event.position - map_offset) / map_scale))
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		var state_id := state_at_map_point((event.position - map_offset) / map_scale)
-		if not state_id.is_empty():
+		if not state_id.is_empty() and (selectable_faction == 0 or int(map_state.states[state_id].owner) == selectable_faction):
 			select_state(state_id)
+		accept_event()
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		var state_id := state_at_map_point((event.position - map_offset) / map_scale)
+		if not state_id.is_empty():
+			state_right_clicked.emit(state_id)
 		accept_event()
 
 func _set_hovered(state_id: String) -> void:
 	if hovered_id == state_id:
 		return
 	hovered_id = state_id
-	tooltip_text = "" if state_id.is_empty() else str(map_data.regions[state_id].name)
+	tooltip_text = "" if state_id.is_empty() else "%s\n力量：%s" % [map_data.regions[state_id].name, preload("res://scripts/gameplay/match_rules.gd").number(int(map_state.states[state_id].units))]
 	refresh_states()
 	state_hovered.emit(state_id)
 
