@@ -27,8 +27,11 @@ func configure(match_controller: Control) -> void:
 		_send(%CustomPercent.value))
 	%CustomPercent.value_changed.connect(func(_value: float): _refresh_order())
 	%CancelOrder.pressed.connect(dismiss_order)
-	%RematchButton.pressed.connect(func(): simulation.request_rematch(controller.local_player_id))
+	%RematchButton.pressed.connect(func(): controller.submit_action("rematch"))
 	%ResultMenu.pressed.connect(_return_to_menu)
+	var session := get_node_or_null("/root/GameSession")
+	if session != null:
+		session.command_result.connect(func(result: Dictionary): show_notice(result.message))
 	simulation.changed.connect(refresh)
 	refresh()
 
@@ -84,7 +87,8 @@ func _pick_spawn(index: int) -> void:
 	_refresh_spawn()
 
 func _confirm_spawn() -> void:
-	if simulation.choose_spawn(controller.local_player_id, _spawn_candidate):
+	var result: Dictionary = controller.submit_action("spawn", {"state_id": _spawn_candidate})
+	if result.ok:
 		if simulation.phase == Match.Phase.ACTIVE:
 			controller.map_view.select_state(_spawn_candidate)
 		refresh()
@@ -132,7 +136,7 @@ func _refresh_order() -> void:
 	%CustomSend.disabled = not simulation.order_error(controller.local_player_id, _order_source, _order_target, %CustomPercent.value).is_empty()
 
 func _send(percent: float) -> void:
-	var result: Dictionary = simulation.send_force(controller.local_player_id, _order_source, _order_target, percent)
+	var result: Dictionary = controller.submit_action("send", {"source": _order_source, "target": _order_target, "percent": percent})
 	if result.ok:
 		dismiss_order()
 	show_notice(result.message)

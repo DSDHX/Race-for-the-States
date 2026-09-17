@@ -30,7 +30,16 @@ func _ready() -> void:
 	if map_data.load_map() != OK:
 		push_error("Unable to load res://data/map/us_states.json")
 		return
-	map_state.reset(map_data.regions.keys())
+	if gameplay_enabled and session != null and session.simulation != null:
+		match_logic = session.simulation
+		map_data = match_logic.data
+		map_state = match_logic.state
+		# The host's editor-authored map setting defines adjacency for both peers.
+		if not match_logic.replica and match_logic.include_virtual_links != map_view.include_virtual_links:
+			match_logic.include_virtual_links = map_view.include_virtual_links
+			match_logic.changed.emit()
+	else:
+		map_state.reset(map_data.regions.keys())
 	map_view.configure(map_data, map_state)
 	map_view.state_selected.connect(_on_selected)
 	map_state.changed.connect(_refresh_scores)
@@ -38,12 +47,14 @@ func _ready() -> void:
 	if gameplay_enabled:
 		var players: Dictionary = match_config.get("players", {1: {"name": "你", "faction_id": 1}})
 		local_player_id = int(match_config.get("local_player_id", 1))
-		match_logic = MatchScript.new()
-		match_logic.include_virtual_links = map_view.include_virtual_links
+		if match_logic == null:
+			match_logic = MatchScript.new()
+			match_logic.include_virtual_links = map_view.include_virtual_links
+			if not match_logic.setup(map_data, map_state, players):
+				push_error("Invalid match roster")
+				return
+		map_view.include_virtual_links = match_logic.include_virtual_links
 		match_logic.changed.connect(_refresh_match)
-		if not match_logic.setup(map_data, map_state, players):
-			push_error("Invalid match roster")
-			return
 		map_view.selectable_faction = local_faction_id
 		map_view.state_right_clicked.connect(_on_right_clicked)
 		gameplay_ui.configure(self)
@@ -62,10 +73,28 @@ func _refresh_scores() -> void:
 	scores.set_totals(map_state.electoral_totals(map_data.regions))
 
 func _process(delta: float) -> void:
-	if match_logic != null:
+	var session := get_node_or_null("/root/GameSession")
+	if match_logic != null and (session == null or session.simulation != match_logic):
 		match_logic.advance(delta)
 
+func submit_action(action: String, fields: Dictionary = {}) -> Dictionary:
+	var session := get_node_or_null("/root/GameSession")
+	if session != null and session.simulation == match_logic:
+		return session.submit_action(action, fields)
+	# Direct F6 scene preview retains the same single-player controls.
+	match action:
+		"spawn":
+			return {"ok": match_logic.choose_spawn(local_player_id, fields.state_id)}
+		"send":
+			return match_logic.send_force(local_player_id, fields.source, fields.target, fields.percent)
+		"rematch":
+			return {"ok": match_logic.request_rematch(local_player_id)}
+	return {"ok": false}
+
 func _refresh_match() -> void:
+	if map_view.include_virtual_links != match_logic.include_virtual_links:
+		map_view.include_virtual_links = match_logic.include_virtual_links
+		map_view.refresh_states()
 	map_view.input_enabled = match_logic.phase == MatchScript.Phase.ACTIVE
 	scores.set_remaining(match_logic.remaining_seconds)
 	if not selected_id.is_empty() and int(map_state.states[selected_id].owner) != local_faction_id:

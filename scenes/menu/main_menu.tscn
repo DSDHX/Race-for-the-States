@@ -44,6 +44,7 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 5.0
+grow_horizontal = 2
 mouse_filter = 2
 color = Color(0.408, 0.875, 0.808, 1)
 
@@ -54,6 +55,8 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -5.0
+grow_horizontal = 2
+grow_vertical = 0
 mouse_filter = 2
 color = Color(0.953, 0.651, 0.416, 1)
 
@@ -83,6 +86,14 @@ THE STATES"
 
 [node name="Divider" type="HSeparator" parent="Center/Card/Content" unique_id=807892530]
 layout_mode = 2
+
+[node name="ConnectionNotice" type="Label" parent="Center/Card/Content" unique_id=637468043]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.953, 0.651, 0.416, 1)
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
 
 [node name="HomePage" type="VBoxContainer" parent="Center/Card/Content" unique_id=2100662562]
 unique_name_in_owner = true
@@ -130,6 +141,22 @@ custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 text = "成为主机"
 
+[node name="PortRow" type="HBoxContainer" parent="Center/Card/Content/ModePage" unique_id=1808126750]
+layout_mode = 2
+
+[node name="PortLabel" type="Label" parent="Center/Card/Content/ModePage/PortRow" unique_id=902645636]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "主机端口"
+
+[node name="HostPort" type="SpinBox" parent="Center/Card/Content/ModePage/PortRow" unique_id=814463791]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(210, 48)
+layout_mode = 2
+min_value = 1.0
+max_value = 65535.0
+value = 27845.0
+
 [node name="JoinButton" type="Button" parent="Center/Card/Content/ModePage" unique_id=1425196594]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 64)
@@ -163,7 +190,7 @@ text = "输入主机地址"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-placeholder_text = "例如：192.168.1.10"
+placeholder_text = "例如：192.168.1.10:27845"
 max_length = 255
 
 [node name="JoinStatus" type="Label" parent="Center/Card/Content/JoinPage" unique_id=1430722708]
@@ -172,7 +199,7 @@ custom_minimum_size = Vector2(0, 62)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.64, 0.71, 0.77, 1)
 theme_override_font_sizes/font_size = 22
-text = "联机功能尚未接入，暂时无法连接房间。"
+text = "请连接同一局域网，输入房主界面显示的 IPv4 地址。"
 autowrap_mode = 3
 
 [node name="ConnectButton" type="Button" parent="Center/Card/Content/JoinPage" unique_id=1667342815]
@@ -210,6 +237,7 @@ theme_override_font_sizes/font_size = 20
 text = "1 / 2 位玩家"
 
 [node name="LocalName" type="Label" parent="Center/Card/Content/LobbyPage" unique_id=1605553837]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "你（房主） · 选择势力"
@@ -257,9 +285,10 @@ custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 text = "离开房间"
 
-[node name="OfflineNote" type="Label" parent="Center/Card/Content/LobbyPage" unique_id=37750289]
+[node name="RoomAddress" type="Label" parent="Center/Card/Content/LobbyPage" unique_id=37750289]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.64, 0.71, 0.77, 1)
 theme_override_font_sizes/font_size = 18
-text = "当前尚未接入联机；两名玩家必须选择不同势力。"
+text = "主机地址：等待创建房间"
 autowrap_mode = 3

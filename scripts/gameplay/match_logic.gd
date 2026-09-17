@@ -1,7 +1,5 @@
 extends RefCounted
-## Authoritative local simulation; independent of scenes and transport.
-## A future TCP host validates sender identity, calls commands, then broadcasts
-## get_snapshot(). Only the host should call advance(); no networking here.
+## Authoritative simulation and validated read-only client replica.
 
 signal changed
 const Rules = preload("res://scripts/gameplay/match_rules.gd")
@@ -19,6 +17,7 @@ var _choices: Dictionary = {}
 var _rematch_votes: Dictionary = {}
 var _fractional_second := 0.0
 var _rng := RandomNumberGenerator.new()
+var replica := false
 
 func setup(definitions: RefCounted, map_state: RefCounted, players: Dictionary, seed_value: int = -1) -> bool:
 	if players.is_empty() or players.size() > 2 or definitions.regions.size() < players.size() * Rules.SPAWN_CHOICES:
@@ -87,6 +86,8 @@ func faction_for(player_id: int) -> int:
 	return int(_players.get(player_id, {}).get("faction_id", 0))
 
 func choose_spawn(player_id: int, state_id: String) -> bool:
+	if replica:
+		return false
 	if phase != Phase.SPAWN or not _players.has(player_id) or _choices.has(player_id):
 		return false
 	if not spawn_options(player_id).has(state_id) or _choices.values().has(state_id):
@@ -101,6 +102,8 @@ func choose_spawn(player_id: int, state_id: String) -> bool:
 	return true
 
 func advance(delta: float) -> void:
+	if replica:
+		return
 	if phase != Phase.ACTIVE or not is_finite(delta) or delta <= 0.0:
 		return
 	_fractional_second += delta
@@ -135,6 +138,8 @@ func order_error(player_id: int, source: String, target: String, percent: float)
 	return ""
 
 func send_force(player_id: int, source: String, target: String, percent: float) -> Dictionary:
+	if replica:
+		return {"ok": false, "message": "请等待主机确认操作。"}
 	var error := order_error(player_id, source, target, percent)
 	if not error.is_empty():
 		return {"ok": false, "message": error}
@@ -173,6 +178,8 @@ func _evaluate_result() -> void:
 			return
 
 func request_rematch(player_id: int) -> bool:
+	if replica:
+		return false
 	if phase != Phase.FINISHED or not _players.has(player_id) or _rematch_votes.has(player_id):
 		return false
 	_rematch_votes[player_id] = true
@@ -207,3 +214,78 @@ func get_snapshot() -> Dictionary:
 	return {"phase": phase, "remaining_seconds": remaining_seconds, "winner_faction": winner_faction,
 		"round_number": round_number, "players": _players.duplicate(true), "options": _options.duplicate(true),
 		"choices": _choices.duplicate(true), "rematch_votes": _rematch_votes.duplicate(true), "states": state.get_snapshot()}
+
+func snapshot_for(player_id: int) -> Dictionary:
+	var snapshot := get_snapshot()
+	snapshot.options = {str(player_id): spawn_options(player_id)}
+	# Only readiness is public before the game starts, not opponents' selections.
+	if phase == Phase.SPAWN:
+		for id: Variant in snapshot.choices:
+			if int(id) != player_id:
+				snapshot.choices[id] = ""
+	snapshot["include_virtual_links"] = include_virtual_links
+	return snapshot
+
+static func whole(value: Variant, minimum: int, maximum: int) -> bool:
+	return (value is int or value is float) and is_finite(float(value)) and float(value) == floor(float(value)) and float(value) >= minimum and float(value) <= maximum
+
+func apply_remote_snapshot(snapshot: Dictionary, player_id: int) -> bool:
+	# Validate every field before changing the replica or emitting any signals.
+	if not replica or not whole(snapshot.get("phase"), 0, 2) or not whole(snapshot.get("remaining_seconds"), 0, Rules.DURATION_SECONDS):
+		return false
+	if not whole(snapshot.get("winner_faction"), 0, 2) or not whole(snapshot.get("round_number"), 1, 1000000):
+		return false
+	for key in ["players", "options", "choices", "rematch_votes", "states"]:
+		if not snapshot.get(key) is Dictionary:
+			return false
+	if not snapshot.get("include_virtual_links") is bool:
+		return false
+	var roster: Dictionary = snapshot.players
+	if roster.size() != _players.size():
+		return false
+	for id: int in _players:
+		var entry: Variant = roster.get(str(id))
+		if not entry is Dictionary or not whole(entry.get("faction_id"), 1, 2) or int(entry.faction_id) != faction_for(id):
+			return false
+	var options: Variant = snapshot.options.get(str(player_id))
+	if snapshot.options.size() != 1 or not options is Array or options.size() != Rules.SPAWN_CHOICES:
+		return false
+	var seen: Array = []
+	for id: Variant in options:
+		if not id is String or not data.regions.has(id) or seen.has(id):
+			return false
+		seen.append(id)
+	var choices: Dictionary = {}
+	var votes: Dictionary = {}
+	for key: Variant in snapshot.choices:
+		if not key is String or not key.is_valid_int() or not _players.has(int(key)):
+			return false
+		var choice: Variant = snapshot.choices[key]
+		if not choice is String or (not choice.is_empty() and not data.regions.has(choice)):
+			return false
+		if int(key) == player_id and not options.has(choice):
+			return false
+		choices[int(key)] = choice
+	for key: Variant in snapshot.rematch_votes:
+		if not key is String or not key.is_valid_int() or not _players.has(int(key)) or snapshot.rematch_votes[key] != true:
+			return false
+		votes[int(key)] = true
+	if int(snapshot.round_number) < round_number:
+		return false
+	# MapState validates its full payload atomically. Suppress its intermediate signal.
+	state.set_block_signals(true)
+	var applied: bool = state.apply_snapshot(snapshot.states)
+	state.set_block_signals(false)
+	if not applied:
+		return false
+	phase = int(snapshot.phase) as Phase
+	remaining_seconds = int(snapshot.remaining_seconds)
+	winner_faction = int(snapshot.winner_faction)
+	round_number = int(snapshot.round_number)
+	include_virtual_links = snapshot.include_virtual_links
+	_options = {player_id: options.duplicate()}
+	_choices = choices
+	_rematch_votes = votes
+	state.changed.emit()
+	changed.emit()
+	return true
