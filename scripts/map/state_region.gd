@@ -1,5 +1,6 @@
 @tool
 extends Node2D
+const Rules = preload("res://scripts/gameplay/match_rules.gd")
 ## Geometry and labels are authored in the scene. Scripts only apply live state.
 
 @export var state_id := ""
@@ -56,6 +57,8 @@ func refresh_visuals() -> void:
 		shape.color = _display_fill(_base_colors.get(shape, shape.color))
 	var amount := int(definition.get("electoral_votes", 0))
 	$LabelAnchor/LabelPanel/Amount.text = str(amount)
+	$LabelAnchor/LabelPanel/Abbreviation/Force.text = Rules.number(units)
+	$LabelAnchor/LabelPanel/Abbreviation/Force.modulate = Color("68dfce") if owner_id == 1 else (Color("ffbc7c") if owner_id == 2 else Color("becdd5"))
 	queue_redraw()
 
 func _display_fill(base: Color) -> Color:

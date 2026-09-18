@@ -6,6 +6,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 
 #, c-format
+msgid "力量：%s\n每秒增长：%s"
+msgstr "力量：%s\n每秒增长：%s"
+
+#, c-format
+msgid "提前结束 · 青色 %d 票 / 橙色 %d 票\n%s占领全部州，提前获胜。剩余时间 %s。"
+msgstr "提前结束 · 青色 %d 票 / 橙色 %d 票\n%s占领全部州，提前获胜。剩余时间 %s。"
+
+#, c-format
 msgid " · %d 票"
 msgstr " · %d 票"
 

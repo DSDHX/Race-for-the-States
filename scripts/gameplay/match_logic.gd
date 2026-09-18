@@ -164,6 +164,18 @@ func send_force(player_id: int, source: String, target: String, percent: float) 
 		"message": "增援已到达。" if friendly else ("成功取得该州！" if captured else "双方力量已抵消，目标州仍由原势力掌控。")}
 
 func _evaluate_result() -> void:
+	# Complete control is the only early-win condition. A 270-vote lead can
+	# still be reversed until the deadline if any region remains unclaimed.
+	for faction in [1, 2]:
+		var owns_all: bool = not state.states.is_empty()
+		for item: Dictionary in state.states.values():
+			if int(item.owner) != faction:
+				owns_all = false
+				break
+		if owns_all:
+			winner_faction = faction
+			phase = Phase.FINISHED
+			return
 	# A majority is only evaluated at the deadline; early leads can be reversed.
 	if remaining_seconds > 0:
 		return

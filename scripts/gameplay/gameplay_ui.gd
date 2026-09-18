@@ -26,6 +26,8 @@ func configure(match_controller: Control) -> void:
 	%Send25.pressed.connect(_send.bind(25.0))
 	%Send50.pressed.connect(_send.bind(50.0))
 	%Send75.pressed.connect(_send.bind(75.0))
+	%Send100.pressed.connect(_send.bind(100.0))
+	%NoticeTimer.timeout.connect(func(): %NoticePanel.hide())
 	%CustomButton.pressed.connect(_show_custom)
 	%CustomSend.pressed.connect(func():
 		%CustomPercent.apply()
@@ -48,24 +50,19 @@ func refresh() -> void:
 		return
 	if not _notice_key.is_empty():
 		%Notice.text = tr(_notice_key)
-	var faction: int = controller.local_faction_id
-	%TotalForce.text = Rules.number(simulation.force_total(faction))
-	%GrowthLabel.text = tr("+ %s / 秒") % Rules.number(simulation.growth_total(faction))
-	%ForceCaption.text = tr("你的力量 · ") + (tr("青色势力") if faction == 1 else tr("橙色势力"))
-	%TotalForce.add_theme_color_override("font_color", Color("68dfce") if faction == 1 else Color("ffbc7c"))
-	var selected: String = controller.selected_id
-	%SelectedCaption.text = tr("所选州力量") if selected.is_empty() else state_name(selected) + tr(" · %d 票") % int(controller.map_data.regions[selected].electoral_votes)
-	%SelectedForce.text = "—" if selected.is_empty() else Rules.number(int(controller.map_state.states[selected].units))
 	%SpawnOverlay.visible = simulation.phase == Match.Phase.SPAWN
 	%ResultOverlay.visible = simulation.phase == Match.Phase.FINISHED
 	if simulation.round_number != _shown_round:
 		_shown_round = simulation.round_number
 		_spawn_candidate = ""
-		show_notice("左键选择己方州，再右键相邻州派遣力量。")
+		%NoticePanel.hide()
+		%NoticeTimer.stop()
+		_notice_key = ""
 	if simulation.phase == Match.Phase.SPAWN:
 		_refresh_spawn()
 	elif simulation.phase == Match.Phase.FINISHED:
 		dismiss_order()
+		%NoticePanel.hide()
 		_refresh_result()
 	elif %OrderOverlay.visible:
 		_refresh_order()
@@ -103,11 +100,15 @@ func _confirm_spawn() -> void:
 func show_notice(message: String) -> void:
 	_notice_key = message
 	%Notice.text = tr(message)
+	%NoticePanel.visible = not message.is_empty() and simulation.phase == Match.Phase.ACTIVE
+	if %NoticePanel.visible:
+		%NoticeTimer.start()
 
 func open_order(source: String, target: String) -> void:
 	_order_source = source
 	_order_target = target
 	%CustomRow.hide()
+	%NoticePanel.hide()
 	%OrderOverlay.show()
 	_refresh_order()
 	%Send50.grab_focus()
@@ -135,7 +136,7 @@ func _refresh_order() -> void:
 	var friendly: bool = int(controller.map_state.states[_order_target].owner) == controller.local_faction_id
 	%OrderTitle.text = (tr("增援") if friendly else tr("争取")) + " · " + state_name(_order_target)
 	%OrderDetails.text = tr("%s → %s\n可派力量：%s   ·   目标力量：%s") % [state_name(_order_source), state_name(_order_target), Rules.number(source_force), Rules.number(target_force)]
-	var buttons: Array[Button] = [%Send25, %Send50, %Send75]
+	var buttons: Array[Button] = [%Send25, %Send50, %Send75, %Send100]
 	for i in buttons.size():
 		var percent := (i + 1) * 25
 		buttons[i].text = "%d%%\n%s" % [percent, Rules.number(int(source_force * percent / 100.0))]
@@ -154,6 +155,8 @@ func _refresh_result() -> void:
 	%ResultTitle.text = tr("平局") if winner == 0 else (tr("竞选胜利") if winner == controller.local_faction_id else tr("竞选落败"))
 	var totals: Array[int] = controller.map_state.electoral_totals(controller.map_data.regions)
 	%ResultDetails.text = tr("8 分钟结束 · 青色 %d 票 / 橙色 %d 票\n%s") % [totals[1], totals[2], tr("双方均未达到 270 票。") if winner == 0 else (tr("青色势力") if winner == 1 else tr("橙色势力")) + tr("在最终结算时达到 270 票。")]
+	if winner != 0 and simulation.remaining_seconds > 0:
+		%ResultDetails.text = tr("提前结束 · 青色 %d 票 / 橙色 %d 票\n%s占领全部州，提前获胜。剩余时间 %s。") % [totals[1], totals[2], tr("青色势力") if winner == 1 else tr("橙色势力"), Rules.clock_text(simulation.remaining_seconds)]
 	%RematchButton.disabled = simulation.has_rematch_vote(controller.local_player_id)
 	%RematchButton.text = tr("已同意 · 等待对手") if %RematchButton.disabled else tr("再开一局")
 	%RematchStatus.text = tr("单人模式可立即重新选择出生州。") if simulation.player_count() == 1 else tr("双方同意后重新开局（%d / %d）。") % [simulation.rematch_count(), simulation.player_count()]

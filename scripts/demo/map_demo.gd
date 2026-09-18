@@ -71,6 +71,14 @@ func _on_selected(state_id: String) -> void:
 
 func _refresh_scores() -> void:
 	scores.set_totals(map_state.electoral_totals(map_data.regions))
+	var forces: Array[int] = [0, 0, 0]
+	var growth: Array[int] = [0, 0, 0]
+	for id: String in map_state.states:
+		var faction: int = int(map_state.states[id].owner)
+		forces[faction] += int(map_state.states[id].units)
+		if faction != 0:
+			growth[faction] += MatchScript.Rules.growth(int(map_data.regions[id].electoral_votes))
+	scores.set_forces(forces[1], forces[2], growth[1], growth[2])
 
 func _process(delta: float) -> void:
 	var session := get_node_or_null("/root/GameSession")

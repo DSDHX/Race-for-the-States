@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://rav0hx8uhxdg" path="res://scripts/map/electoral_score.gd" id="1"]
 
 [node name="Scores" type="Control" unique_id=1245395373]
-custom_minimum_size = Vector2(0, 112)
+custom_minimum_size = Vector2(0, 124)
 layout_mode = 3
 anchors_preset = 10
 anchor_right = 1.0
@@ -141,3 +141,29 @@ theme_override_font_sizes/font_size = 24
 text = "270"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PlayerOneForce" type="Label" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 82.0
+offset_right = 434.0
+offset_bottom = 122.0
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.408, 0.875, 0.808, 1)
+theme_override_font_sizes/font_size = 28
+text = "0"
+
+[node name="PlayerTwoForce" type="Label" parent="."]
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -434.0
+offset_top = 82.0
+offset_right = -34.0
+offset_bottom = 122.0
+grow_horizontal = 0
+mouse_filter = 1
+theme_override_colors/font_color = Color(1, 0.718, 0.482, 1)
+theme_override_font_sizes/font_size = 28
+text = "0"
+horizontal_alignment = 2

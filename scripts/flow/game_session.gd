@@ -14,7 +14,7 @@ const State = preload("res://scripts/map/map_state.gd")
 const DEFAULT_PORT := 27845
 const PROTOCOL := 1
 ## Bump whenever gameplay semantics or the network snapshot schema changes.
-const RULESET_VERSION := 1
+const RULESET_VERSION := 2
 const GUEST_ID := 2
 var transport: Node
 var simulation: RefCounted

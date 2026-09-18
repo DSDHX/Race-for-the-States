@@ -19,81 +19,48 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="GameplayUI" type="PanelContainer" unique_id=503322311]
-custom_minimum_size = Vector2(0, 136)
-theme_override_styles/panel = SubResource("Panel")
+[node name="GameplayUI" type="Control" unique_id=503322311]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1")
 
-[node name="Columns" type="HBoxContainer" parent="." unique_id=1104944791]
-layout_mode = 2
-theme_override_constants/separation = 34
+[node name="Feedback" type="CanvasLayer" parent="."]
+layer = 9
 
-[node name="Total" type="VBoxContainer" parent="Columns" unique_id=1416061802]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 2
+[node name="NoticePanel" type="PanelContainer" parent="Feedback"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 10
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -340.0
+offset_top = -94.0
+offset_right = 340.0
+offset_bottom = -24.0
+grow_horizontal = 2
+mouse_filter = 2
+theme = ExtResource("2")
+theme_override_styles/panel = SubResource("Panel")
 
-[node name="ForceCaption" type="Label" parent="Columns/Total" unique_id=138728950]
+[node name="Notice" type="Label" parent="Feedback/NoticePanel"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "你的力量 · 青色势力"
-
-[node name="TotalForce" type="Label" parent="Columns/Total" unique_id=1677393193]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.408, 0.875, 0.808, 1)
-theme_override_font_sizes/font_size = 38
-text = "750,000"
-
-[node name="GrowthLabel" type="Label" parent="Columns/Total" unique_id=86504105]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "+ 0 / 秒"
-
-[node name="Selected" type="VBoxContainer" parent="Columns" unique_id=1541937290]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 2
-
-[node name="SelectedCaption" type="Label" parent="Columns/Selected" unique_id=102304790]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "所选州力量"
-
-[node name="SelectedForce" type="Label" parent="Columns/Selected" unique_id=1080900545]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 38
-text = "—"
-
-[node name="Instructions" type="VBoxContainer" parent="Columns" unique_id=820307435]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 1.5
-theme_override_constants/separation = 2
-
-[node name="OperationHint" type="Label" parent="Columns/Instructions" unique_id=1999341121]
-unique_name_in_owner = true
-layout_mode = 2
+mouse_filter = 2
 theme_override_font_sizes/font_size = 20
-text = "左键选州  /  右键派遣  /  ESC 菜单"
-
-[node name="Notice" type="Label" parent="Columns/Instructions" unique_id=2021504389]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "左键选择己方州，再右键相邻州派遣力量。"
+horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="VictoryHint" type="Label" parent="Columns/Instructions" unique_id=1711753857]
+[node name="NoticeTimer" type="Timer" parent="."]
 unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "守到最后：倒计时归零时，270 票获胜。"
-autowrap_mode = 3
+wait_time = 4.0
+one_shot = true
 
 [node name="Dialogs" type="CanvasLayer" parent="." unique_id=1839086496]
 layer = 10
@@ -279,7 +246,15 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "75%"
 
+[node name="Send100" type="Button" parent="Dialogs/OrderOverlay/Center/Panel/Content/Presets"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "100%"
+
 [node name="CustomButton" type="Button" parent="Dialogs/OrderOverlay/Center/Panel/Content" unique_id=588181301]
+
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 62)
 layout_mode = 2
